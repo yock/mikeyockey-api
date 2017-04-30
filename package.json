@@ -1,0 +1,19 @@
+{
+  "name": "mikeyockey-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prestart": "yarn build",
+    "start": "node dist/index.js",
+    "build": "babel ./app -d dist",
+    "dev": "babel-node ./app"
+  },
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.6"
+  }
+}
