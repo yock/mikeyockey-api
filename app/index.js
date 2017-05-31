@@ -1,6 +1,7 @@
 import fs from 'fs';
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 import Post from './post';
 
 import bodyParser from 'body-parser';
@@ -14,6 +15,13 @@ const db = mongoose.connection;
 
 const app = express();
 app.use(bodyParser.json());
+
+const corsOptions = {
+  origin: '*'
+};
+
+app.use(cors(corsOptions));
+
 app.post('/post', (req, res) => {
   new Post(req.body.post).save((err) => {
     if(err) {
@@ -25,7 +33,7 @@ app.post('/post', (req, res) => {
 });
 
 app.get('/posts', (req, res) => {
-  Post.find().sort({ createdAt: -1 }).then((posts) => {
+  Post.find().then((posts) => {
     res.status(200).send(posts);
   });
 });
@@ -33,4 +41,5 @@ app.get('/posts', (req, res) => {
 db.on('error', console.error.bind(console, 'Could not connect to MongoDB'));
 db.once('open', () => {
   app.listen(process.env.PORT || 3100);
+  console.log('API ready');
 });
